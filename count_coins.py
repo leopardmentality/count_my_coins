@@ -1,10 +1,9 @@
 import os
-from dotenv import load_dotenv
+import streamlit as st
 import requests
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from xgboost import XGBRegressor
-import streamlit as st
 from datetime import datetime, timedelta
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
@@ -13,8 +12,8 @@ def import_blockchain_data(start_date, end_date):
     # Set the API endpoint URL
     url = "https://api.coincap.io/v2/assets"
 
-    # Get the API key from the environment variable
-    api_key = os.getenv("COINCAP_API_KEY")
+    # Get the API key from the Streamlit secrets
+    api_key = st.secrets["COINCAP_API_KEY"]
 
     # Set the headers to include the API key
     headers = {

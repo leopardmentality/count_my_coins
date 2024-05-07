@@ -1,4 +1,7 @@
 import os
+from dotenv import load_dotenv
+import subprocess
+import sys
 import streamlit as st
 import requests
 import numpy as np
@@ -8,12 +11,26 @@ from datetime import datetime, timedelta
 import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 
+# Load environment variables from .env file
+load_dotenv()
+
+# Check if the required packages are installed
+def check_requirements():
+    requirements_file = "requirements.txt"
+    if os.path.exists(requirements_file):
+        try:
+            subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", requirements_file])
+        except subprocess.CalledProcessError:
+            print("Error installing requirements. Please check the requirements.txt file.")
+    else:
+        print("No requirements.txt file found.")
+
 def import_blockchain_data(start_date, end_date):
     # Set the API endpoint URL
     url = "https://api.coincap.io/v2/assets"
 
-    # Get the API key from the Streamlit secrets
-    api_key = st.secrets["COINCAP_API_KEY"]
+    # Get the API key from the environment variable
+    api_key = os.getenv("COINCAP_API_KEY")
 
     # Set the headers to include the API key
     headers = {
@@ -57,6 +74,9 @@ def get_top_coins(names, change_percents, n=3):
     return top_names, top_change_percents, top_indices
 
 def main():
+    # Check and install required packages
+    check_requirements()
+
     st.title("Count My Coins")
 
     # Get the start and end dates for the past 6 months

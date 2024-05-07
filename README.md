@@ -1,5 +1,3 @@
-Sure, here's the updated README document with the requested changes:
-
 # Count My Coins
 
 This code is designed to predict the potential earnings of investing in the top 3 cryptocurrencies based on their 24-hour price change percentage. It uses the CoinCap API to retrieve cryptocurrency data for the past 6 months, processes it using scikit-learn and XGBoost libraries, and displays the results in a Streamlit web application.
